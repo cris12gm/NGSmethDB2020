@@ -1,1 +1,12 @@
-Test
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="index" id="index">
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+            <img src="{% static 'images/titleBig.png'%}" width="60%">
+        </div>
+    </div>
+</div>
+{% endblock %}
