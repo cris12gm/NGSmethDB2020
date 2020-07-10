@@ -1,0 +1,12 @@
+*.pyc
+*~
+__pycache__
+envNGSmethDB/
+db.sqlite3
+/static
+.DS_Store
+config.py
+.vscode
+NGSmethDB2020/settings.py
+migrations/
+uploads/
