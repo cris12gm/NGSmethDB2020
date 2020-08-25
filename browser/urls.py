@@ -3,11 +3,9 @@ from django.urls import path
 from django.conf.urls import include,url
 from django.conf.urls.static import static
 from django.conf import settings
+from .views import browser
 
-from NGSmethDB2020 import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    url(r'^browser/', include('browser.urls')),
-    url(r'^$', views.index, name='home'),
-]
+    url('', browser.as_view(), name='browser'),
+    ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
