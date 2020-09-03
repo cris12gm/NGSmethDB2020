@@ -19,7 +19,7 @@ class browser(TemplateView):
     template = 'browser/browser.html'
     
     def get(self,request):
-        position = getChroms("chr1","hg38")
+        position = getChroms("hg38")
         return render(request, self.template, {
             'position':position
         })
