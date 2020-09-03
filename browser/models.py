@@ -1,5 +1,5 @@
 from django.db import models
-from mongoTools.classes import Methylation
+from mongoTools.classes.methylation import Methylation
 
 def checkPosition(_id):
     checkPos = ""

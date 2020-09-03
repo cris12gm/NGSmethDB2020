@@ -1,7 +1,7 @@
 import ipaddress
 import re
 
-from base.item import Item
+from mongoTools.base.item import Item
 
 class Methylation(Item):
     collection_name = 'methylation'

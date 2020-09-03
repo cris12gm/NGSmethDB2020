@@ -1,4 +1,4 @@
-from base.item import Item
+from mongoTools.base.item import Item
 
 class Samples(Item):
     collection_name = 'samples'

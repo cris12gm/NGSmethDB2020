@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 
-from base.config import MONGO_HOSTNAME, MONGO_PORT
+from mongoTools.base.config import MONGO_HOSTNAME, MONGO_PORT
 
 class MongoEngine:
     client = MongoClient(MONGO_HOSTNAME, MONGO_PORT)
