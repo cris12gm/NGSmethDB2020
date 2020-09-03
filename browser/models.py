@@ -7,5 +7,4 @@ def checkPosition(_id,database):
 
     MongoEngine().set_database_name(database)
     checkPos = Methylation().find({'_id': _id})
-    print (checkPos.data)
-    print ("cris")
+    return (checkPos.data)

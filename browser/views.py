@@ -19,8 +19,9 @@ class browser(TemplateView):
     template = 'browser/browser.html'
     
     def get(self,request):
-        checkPosition("chrM_6563","hg38")
+        position = checkPosition("chrM_6563","hg38")
         return render(request, self.template, {
+            'position':position
         })
     def post(self,request):
         return render(request, self.template, {
