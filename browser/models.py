@@ -8,4 +8,4 @@ def getAllChroms(database):
     MongoEngine().set_database_name(database)
     chroms = Chroms().find({})
     
-    return (chroms)
+    return (chroms.data)
