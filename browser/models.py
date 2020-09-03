@@ -6,6 +6,6 @@ def getAllChroms(database):
     chroms = ""
 
     MongoEngine().set_database_name(database)
-    chroms = Chroms().find({})
+    chroms = Chroms().find(criteria = {})
     
     return (chroms.data)
