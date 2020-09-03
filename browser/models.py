@@ -1,10 +1,10 @@
 from django.db import models
-from mongoTools.classes.methylation import Methylation
+from mongoTools.classes.methylation import Methylation,Chroms
 from mongoTools.base.mongo_engine import MongoEngine
 
-def checkPosition(_id,database):
-    checkPos = ""
+def getChroms(_chr,database):
+    chroms = ""
 
     MongoEngine().set_database_name(database)
-    checkPos = Methylation().find({'_id': _id})
-    return (checkPos.data)
+    chroms = Chroms().find({'chrom': _chr})
+    return (chroms.data)

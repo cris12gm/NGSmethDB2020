@@ -13,13 +13,13 @@ from django.urls import reverse_lazy
 from datetime import datetime
 import csv
 from sqlalchemy import inspect
-from .models import checkPosition
+from .models import getChroms
 
 class browser(TemplateView):
     template = 'browser/browser.html'
     
     def get(self,request):
-        position = checkPosition("chrM_6563","hg38")
+        position = getChroms("chr1","hg38")
         return render(request, self.template, {
             'position':position
         })
