@@ -13,15 +13,18 @@ from django.urls import reverse_lazy
 from datetime import datetime
 import csv
 from sqlalchemy import inspect
-from .models import getAllChroms
+from .models import getAllChroms, getAllSamples
 
 class browser(TemplateView):
     template = 'browser/browser.html'
     
     def get(self,request):
-        position = getAllChroms("hg38")
+        chroms = getAllChroms("hg38")
+        samples = getAllSamples("hg38")
+        print (samples)
         return render(request, self.template, {
-            'position':position
+            'chroms':chroms,
+            'samples':samples
         })
     def post(self,request):
         return render(request, self.template, {

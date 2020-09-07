@@ -25,7 +25,7 @@ class Item:
         parameters specified in the projection.
     """
     def find(self, criteria={}, projection={}):
-        _criteria = criteria if criteria else {'deleted': False}
+        _criteria = criteria
         _projection = projection if projection else self.collection_schema
         data = json.loads(
             dumps(self.cursor().find(_criteria, _projection)))

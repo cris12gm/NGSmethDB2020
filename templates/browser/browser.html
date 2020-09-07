@@ -20,29 +20,37 @@
                                 </div>
                                 <div class="card-body">
                                     <form id="formInput">
-                                        <input type="radio" name="browser" onclick="myFunction(this.value)" value="region"> Region<br>
+                                        <input type="radio" checked="True" name="browser" onclick="myFunction(this.value)" value="region"> Region<br>
                                         <input type="radio" name="browser" onclick="myFunction(this.value)" value="gene"> Gene<br>
                                     </form>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
-                            <div id="regionInput" style="display:None;">
+                        <div class="col-8">
+                            <div id="regionInput" style="display:block;">
                                 <div class="card">
                                     <div class="card-header d-flex justify-content-center">
-                                        <b>Region</b>
-                                    </div>
+                                        <b>REGION</b>
+                                    </div>   
+                                    <p id="errorsFormRegion" class="text-danger text-center ml-2 mr-2 mt-2 font-weight-light"></p>
                                     <div class="card-body d-flex justify-content-center">
                                         <form action="/geno5mc/queryRegion/" method="post" id="formRegion" onsubmit="return checkformRegion();" name = "formRegion" class="formQuery">
                                             <input type="hidden" name="csrfmiddlewaretoken" value="46TVTMEEL111nQCb3Nfw34c8IpaH9Tjk21GL1xBlbCgUAWi2zJTlyBWueI6YBg2W">
                                             <select placeholder="chrom" name="chrom" id="chrom" class="chrom_select" onchange='changeChrom()' required>
                                                 <option value ="" selected disabled>chrom</option>
-                                                <option value="chr1_248956422">chr1</option>
+                                                {% for chrom in chroms %}
+                                                    <option value="{{ chrom.chrom }}_{{ chrom.size }}">{{ chrom.chrom }}</option>
+                                                {% endfor %}
                                             </select>
-                                            {{ position }}
                                             <input id="chromStart" type="number" name="chromStart" class="chromStart_select" placeholder="chromStart" min="1" required>
                                             -
                                             <input id="chromEnd" type="number" name="chromEnd" class="chromStart_select" placeholder="chromEnd" min="1" required>
+                                            <select placeholder="Sample" name="sample" id="sample" class="sample_select">
+                                                <option value = "" selected disabled>Sample</option>
+                                                {% for sample in samples %}
+                                                    <option value="{{ sample.sample }}">{{ sample.sample }}</option>
+                                                {% endfor %}
+                                            </select>
                                             <div class="mt-2 d-flex justify-content-center">
                                                 <button type="submit" id='submitRegion' class="btn btn-success btn-sm mr-1">Submit</button>
                                                 <button id="loadExRegion" class="btn btn-info btn-sm mr-1">Load Example</button>
@@ -84,5 +92,56 @@
         }
         // document.getElementById("region").html("test");
     }
-    </script>
+</script>
+
+<!-- Change chrom function -->
+
+<script>
+    function changeChrom(e){
+        var chrom = document.getElementById("chrom").value;
+        var chromEnd = chrom.split("_")[1];
+        document.getElementById("chromEnd").setAttribute("max",chromEnd)
+    }
+</script>
+
+<script>
+
+function checkformRegion()    {        
+        var myForm = document.formRegion;
+        if((myForm.chromEnd.value-myForm.chromStart.value)>10000){
+            var newEnd = parseInt(myForm.chromStart.value, 10) + 10000;
+            document.getElementById("errorsFormRegion").innerHTML = "Your query has more than the maximum of 10Kb ("+(myForm.chromEnd.value-myForm.chromStart.value)+"pb), chromEnd has been changed to "+(newEnd);
+            myForm.chromEnd.value = newEnd
+            return false
+        }
+        else if (myForm.chromEnd.value<myForm.chromStart.value){
+            var newEnd = myForm.chromStart.value
+            myForm.chromStart.value = myForm.chromEnd.value
+            myForm.chromEnd.value = newEnd
+            document.getElementById("errorsFormRegion").innerHTML = "Your chromStart coordinate ("+myForm.chromStart.value+") is higher than the chromEnd coordinate ("+myForm.chromEnd.value+"), it has been interchanged, please submit again.";
+            return false
+        }
+        else{
+            ShowLoading();
+            $("div.menu-hide").hide();
+            return true
+        }
+        
+    }
+</script>
+
+<script>
+    $(document).ready(function(){
+
+        $('#loadExRegion').on('click', function(){
+            $('#chromStart').val("37282450");
+            $('#chromEnd').val("37282550");
+            document.getElementById('chrom').value="chr22_50818468.0";
+            return false;
+        });
+
+       });
+</script>
+
+
 {% endblock js %}
