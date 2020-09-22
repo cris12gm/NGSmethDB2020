@@ -34,8 +34,8 @@
                                     </div>   
                                     <p id="errorsFormRegion" class="text-danger text-center ml-2 mr-2 mt-2 font-weight-light"></p>
                                     <div class="card-body d-flex justify-content-center">
-                                        <form action="/geno5mc/queryRegion/" method="post" id="formRegion" onsubmit="return checkformRegion();" name = "formRegion" class="formQuery">
-                                            <input type="hidden" name="csrfmiddlewaretoken" value="46TVTMEEL111nQCb3Nfw34c8IpaH9Tjk21GL1xBlbCgUAWi2zJTlyBWueI6YBg2W">
+                                        <form action="{% url 'region' %}" method="post" id="formRegion" onsubmit="return checkformRegion();" name = "formRegion" class="formQuery">
+                                            {% csrf_token %}
                                             <select placeholder="chrom" name="chrom" id="chrom" class="chrom_select" onchange='changeChrom()' required>
                                                 <option value ="" selected disabled>chrom</option>
                                                 {% for chrom in chroms %}
@@ -45,7 +45,7 @@
                                             <input id="chromStart" type="number" name="chromStart" class="chromStart_select" placeholder="chromStart" min="1" required>
                                             -
                                             <input id="chromEnd" type="number" name="chromEnd" class="chromStart_select" placeholder="chromEnd" min="1" required>
-                                            <select placeholder="Sample" name="sample" id="sample" class="sample_select">
+                                            <select placeholder="Sample" name="sample" id="sample" class="sample_select" required>
                                                 <option value = "" selected disabled>Sample</option>
                                                 {% for sample in samples %}
                                                     <option value="{{ sample.sample }}">{{ sample.sample }}</option>

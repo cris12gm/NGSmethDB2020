@@ -21,7 +21,6 @@ class browser(TemplateView):
     def get(self,request):
         chroms = getAllChroms("hg38")
         samples = getAllSamples("hg38")
-        print (samples)
         return render(request, self.template, {
             'chroms':chroms,
             'samples':samples

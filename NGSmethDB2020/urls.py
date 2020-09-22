@@ -9,5 +9,6 @@ from NGSmethDB2020 import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^browser/', include('browser.urls')),
+    url(r'^results/', include('results.urls')),
     url(r'^$', views.index, name='home'),
 ]
