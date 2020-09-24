@@ -3,8 +3,9 @@
 
 {% block content %}
 <div class='resultsPage'>
-    <div class="row">
-        {{ meth }}
+    <div class="row mt-3 ml-3">
+        <h2>NGSmethDB results for job ID: <a href="{% url 'region' %}?id={{ uniqueID }}">{{ uniqueID }}</a></h2>
     </div>
+    <hr>
 </div>
 {% endblock %}

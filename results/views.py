@@ -12,7 +12,7 @@ from django.urls import reverse_lazy
 
 from .models import getRegionMeth
 from results.plotMethylation import plotRegion
-from results.saveMethFile import saveFile
+from results.saveMethFile import saveFileMeth
 
 from utilities.manageID import checkID
 
@@ -25,11 +25,12 @@ class region(TemplateView):
     
     def get(self,request):
 
-        id_send = request.GET['id'] 
+        id_send = request.GET['id']
         idStatus = checkID(id_send)
 
         if idStatus:
             return render(request, self.template, { 
+                'uniqueID' : id_send
             })
         else:
 
@@ -46,9 +47,9 @@ class region(TemplateView):
         
         meth = getRegionMeth("hg38",chrom,chromStart,chromEnd)
 
-        meth2 = saveFile(inputID,meth,samples)
+        meth2 = saveFileMeth(inputID,meth,samples)
 
-        return render(request, self.template, { 'meth':inputID
+        return render(request, self.template, { 'uniqueID':inputID
         })
 
 # class region_get(TemplateView):

@@ -3,12 +3,12 @@ import os
 from django.conf import settings
 
 
-def saveFile(_id,meth,samplesOut):
+def saveFileMeth(_id,meth,samplesOut):
 
     rootID = settings.MEDIA_ROOT+"/"+_id
 
+    # Create dir
     os.mkdir(rootID)
-
 
 
     # f = open(fileNameAssociations,'w')
