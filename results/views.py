@@ -12,25 +12,54 @@ from django.urls import reverse_lazy
 
 from .models import getRegionMeth
 from results.plotMethylation import plotRegion
+from results.saveMethFile import saveFile
+
+from utilities.manageID import checkID
+
+
 # Create your views here.
 
 class region(TemplateView):
     template = 'results/region.html'
+    templateError = 'results/notFoundResults.html'
     
     def get(self,request):
 
-        return redirect(settings.SUB_SITE+"/browser")
+        id_send = request.GET['id'] 
+        idStatus = checkID(id_send)
 
+        if idStatus:
+            return render(request, self.template, { 
+            })
+        else:
+
+            return render(request, self.templateError, {} )
+
+    
     def post(self,request):
 
         chrom = request.POST['chrom'].split("_")[0]
         chromStart = int(request.POST['chromStart'])
         chromEnd = int(request.POST['chromEnd'])
-        sample = request.POST['sample']
+        samples = [request.POST['sample']]
+        inputID = request.POST['input_id']
         
         meth = getRegionMeth("hg38",chrom,chromStart,chromEnd)
 
-        plot = plotRegion(meth,sample)
+        meth2 = saveFile(inputID,meth,samples)
 
-        return render(request, self.template, {
+        return render(request, self.template, { 'meth':inputID
         })
+
+# class region_get(TemplateView):
+#     template = 'results/region.html'
+
+#     def get(self,request):
+#         return render(request, self.template, {
+#         })
+    
+#     def post(self,request):
+#         return render(request, self.template, {
+#         })
+    
+    

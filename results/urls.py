@@ -6,5 +6,6 @@ from django.conf import settings
 from .views import region
 
 urlpatterns = [
+    # url(r'^region/id/(?P<id>[\w-]+)', region_get.as_view()),
     url(r'^region/', region.as_view(), name='region'),
     ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

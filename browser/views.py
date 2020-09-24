@@ -14,6 +14,7 @@ from datetime import datetime
 import csv
 from sqlalchemy import inspect
 from .models import getAllChroms, getAllSamples
+from utilities.manageID import generate_uniq_id
 
 class browser(TemplateView):
     template = 'browser/browser.html'
@@ -21,9 +22,13 @@ class browser(TemplateView):
     def get(self,request):
         chroms = getAllChroms("hg38")
         samples = getAllSamples("hg38")
+
+        uniqueID = generate_uniq_id()
+
         return render(request, self.template, {
             'chroms':chroms,
-            'samples':samples
+            'samples':samples,
+            'uniqueID':uniqueID
         })
     def post(self,request):
         return render(request, self.template, {

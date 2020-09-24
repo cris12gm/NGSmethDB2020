@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<div>
+<div class='menuHide'>
     <div class="row">
         <div class="col-12 d-flex justify-content-center">
             <img src="{% static 'images/titleBig.png'%}" width="30%">
@@ -34,7 +34,7 @@
                                     </div>   
                                     <p id="errorsFormRegion" class="text-danger text-center ml-2 mr-2 mt-2 font-weight-light"></p>
                                     <div class="card-body d-flex justify-content-center">
-                                        <form action="{% url 'region' %}" method="post" id="formRegion" onsubmit="return checkformRegion();" name = "formRegion" class="formQuery">
+                                        <form action="{% url 'region' %}?id={{ uniqueID }}" method="post" id="formRegion" onsubmit="return checkformRegion();" name = "formRegion" class="formQuery">
                                             {% csrf_token %}
                                             <select placeholder="chrom" name="chrom" id="chrom" class="chrom_select" onchange='changeChrom()' required>
                                                 <option value ="" selected disabled>chrom</option>
@@ -45,12 +45,13 @@
                                             <input id="chromStart" type="number" name="chromStart" class="chromStart_select" placeholder="chromStart" min="1" required>
                                             -
                                             <input id="chromEnd" type="number" name="chromEnd" class="chromStart_select" placeholder="chromEnd" min="1" required>
-                                            <select placeholder="Sample" name="sample" id="sample" class="sample_select" required>
+                                            <select placeholder="Sample" name="sample" id="sample" class="sample_select" required multiple>
                                                 <option value = "" selected disabled>Sample</option>
                                                 {% for sample in samples %}
                                                     <option value="{{ sample.sample }}">{{ sample.sample }}</option>
                                                 {% endfor %}
                                             </select>
+                                            <input id="input_id" name="input_id" type="hidden" value='{{ uniqueID }}'>
                                             <div class="mt-2 d-flex justify-content-center">
                                                 <button type="submit" id='submitRegion' class="btn btn-success btn-sm mr-1">Submit</button>
                                                 <button id="loadExRegion" class="btn btn-info btn-sm mr-1">Load Example</button>
@@ -137,6 +138,7 @@ function checkformRegion()    {
             $('#chromStart').val("37282450");
             $('#chromEnd').val("37282550");
             document.getElementById('chrom').value="chr22_50818468.0";
+            document.getElementById('sample').value="5637_urinaryTract"
             return false;
         });
 
