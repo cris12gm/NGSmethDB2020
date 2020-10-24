@@ -31,7 +31,7 @@
                     <tr>
                         <td>{{ field.specie }}</td>
                         <td>{{ field.assembly }}</td>
-                        {% ifequal field.dump5 'CL' %}
+                        {% ifequal field.individual 'CL' %}
                             <td>Cell Line</td>
                         {% else %}
                             <td>{{ field.individual }}</td>
