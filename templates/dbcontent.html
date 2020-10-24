@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h1 class="titlePag">DATABASE CONTENT</h1>
+<hr>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTableSamples" width="80%" cellspacing="0" style='font-size: 75%;'>
+                <thead>
+                    <tr>
+                        <th>Specie</th>
+                        <th>Assembly</th>
+                        <th>Individual</th>
+                        <th>Sample</th>
+                        <th>Context</th>
+                        <th>Sex</th>
+                        <th>Age</th>
+                        <th>Physiopatological status</th>
+                        <th>Description</th>
+                        <th>Reference</th>
+                        <th>Biosample</th>
+                        <th>SRX</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for field in content %}
+                    <tr>
+                        <td>{{ field.specie }}</td>
+                        <td>{{ field.assembly }}</td>
+                        <td>{{ field.individual }}</td>
+                        <td>{{ field.sample }}</td>
+                        <td>{{ field.context }}</td>
+                        <td>{{ field.sex }}</td>
+                        <td>{{ field.age }}</td>
+                        <td>{{ field.physiopatological_status }}</td>
+                        <td>{{ field.description }}</td>
+                        <td>{{ field.reference }}</td>
+                        <td><a href="https://www.ncbi.nlm.nih.gov/biosample/{{ field.biosample }}">{{ field.biosample }}</a></td>
+                        <td>{{ field.srx }}</td>
+                        {% ifequal field.dump5 'NA' %}
+                            <td><button type="button" class="btn btn-danger btn-sm disabled" style="font-size: 80%;">Not available</button></td>
+                        {% else %}
+                            <td>{{ field.dump5 }}</td>                    
+                        {% endifequal %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>    
+    </div>
+</div>
+{% endblock %}

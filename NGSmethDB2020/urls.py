@@ -10,5 +10,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^browser/', include('browser.urls')),
     url(r'^results/', include('results.urls')),
+    url(r'^dbcontent/', include('dbcontent.urls')),
     url(r'^$', views.index, name='home'),
 ]
