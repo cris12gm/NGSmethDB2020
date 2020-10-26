@@ -16,7 +16,6 @@ from results.saveMethFile import saveFileMeth
 
 from utilities.manageID import checkID
 
-
 # Create your views here.
 
 class region(TemplateView):
@@ -28,12 +27,12 @@ class region(TemplateView):
         id_send = request.GET['id']
         idStatus = checkID(id_send)
 
+        # Check ID status
         if idStatus:
             return render(request, self.template, { 
                 'uniqueID' : id_send
             })
         else:
-
             return render(request, self.templateError, {} )
 
     
@@ -42,25 +41,21 @@ class region(TemplateView):
         chrom = request.POST['chrom'].split("_")[0]
         chromStart = int(request.POST['chromStart'])
         chromEnd = int(request.POST['chromEnd'])
-        samples = [request.POST['sample']]
+        if request.POST['sample'] == "ALL":
+            samples = "ALL"
+        else:
+            samples = [request.POST['sample']]
         inputID = request.POST['input_id']
         
+        # Create jobDir
+
+        rootID = settings.MEDIA_ROOT+"/"+inputID
+        os.mkdir(rootID)
+
+        #GetMeth
+
         meth = getRegionMeth("hg38",chrom,chromStart,chromEnd)
+        linkFileMeth = saveFileMeth(inputID,meth,samples)
 
-        meth2 = saveFileMeth(inputID,meth,samples)
-
-        return render(request, self.template, { 'uniqueID':inputID
+        return render(request, self.template, { 'uniqueID':inputID, 'linkFileMeth':linkFileMeth
         })
-
-# class region_get(TemplateView):
-#     template = 'results/region.html'
-
-#     def get(self,request):
-#         return render(request, self.template, {
-#         })
-    
-#     def post(self,request):
-#         return render(request, self.template, {
-#         })
-    
-    

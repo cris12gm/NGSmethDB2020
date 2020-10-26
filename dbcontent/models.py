@@ -8,6 +8,4 @@ def getDBContent(database):
     MongoEngine().set_database_name(database)
     content = Content().find()
 
-    print (content.data)
-
     return content.data

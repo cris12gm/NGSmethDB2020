@@ -47,6 +47,7 @@
                                             <input id="chromEnd" type="number" name="chromEnd" class="chromStart_select" placeholder="chromEnd" min="1" required>
                                             <select placeholder="Sample" name="sample" id="sample" class="sample_select" required multiple>
                                                 <option value = "" selected disabled>Sample</option>
+                                                <option value = "ALL">All</option>
                                                 {% for sample in samples %}
                                                     <option value="{{ sample.sample }}">{{ sample.sample }}</option>
                                                 {% endfor %}
@@ -135,9 +136,9 @@ function checkformRegion()    {
     $(document).ready(function(){
 
         $('#loadExRegion').on('click', function(){
-            $('#chromStart').val("37282450");
-            $('#chromEnd').val("37282550");
-            document.getElementById('chrom').value="chr22_50818468.0";
+            $('#chromStart').val("10840");
+            $('#chromEnd').val("12000");
+            document.getElementById('chrom').value="chr18_80373285.0";
             document.getElementById('sample').value="5637_urinaryTract"
             return false;
         });
