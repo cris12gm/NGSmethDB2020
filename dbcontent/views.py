@@ -17,7 +17,7 @@ class dbcontent(TemplateView):
 
     def get(self,request):
 
-        content = getDBContent("hg38")
+        content = getDBContent("databaseContent")
 
         return render(request, self.template, {'content' : content})
     def post(self,request):

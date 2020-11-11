@@ -46,6 +46,7 @@ class region(TemplateView):
         else:
             samples = [request.POST['sample']]
         inputID = request.POST['input_id']
+        method = request.POST['method']
         
         # Create jobDir
 
@@ -55,7 +56,7 @@ class region(TemplateView):
         #GetMeth
 
         meth = getRegionMeth("hg38",chrom,chromStart,chromEnd)
-        linkFileMeth = saveFileMeth(inputID,meth,samples)
+        linkFileMeth = saveFileMeth(inputID,meth,samples,method)
 
         return render(request, self.template, { 'uniqueID':inputID, 'linkFileMeth':linkFileMeth
         })
