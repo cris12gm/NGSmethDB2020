@@ -48,7 +48,7 @@
                         {% ifequal field.dump5 'NA' %}
                             <td><button type="button" class="btn btn-danger btn-sm disabled" style="font-size: 80%;">Not available</button></td>
                         {% else %}
-                            <td>{{ field.dump5 }}</td>                    
+                            <td><button type="button" class="btn btn-danger btn-sm" style="font-size: 80%;" href="{{ field.dump5 }}">Download</button></td>                    
                         {% endifequal %}
                     </tr>
                     {% endfor %}
