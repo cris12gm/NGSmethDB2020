@@ -63,14 +63,13 @@ class region(TemplateView):
         # Create jobDir
 
         rootID = settings.MEDIA_ROOT+"/"+inputID
-        # os.mkdir(rootID)
+        os.mkdir(rootID)
 
         #GetMeth
 
         meth = getRegionMeth("hg38",chrom,chromStart,chromEnd)
-        samples = ["5637_urinaryTract"]
         methP = processMeth(meth,samples[0])
-        # linkFileMeth = saveFileMeth(inputID,meth,samples)
+        linkFileMeth = saveFileMeth(inputID,meth,samples)
         linkFileMeth = ""
 
         return render(request, self.template, {
