@@ -66,11 +66,10 @@ class region(TemplateView):
         # Create jobDir
 
         rootID = settings.MEDIA_ROOT+"/"+inputID
-        # os.mkdir(rootID)
+        os.mkdir(rootID)
 
         #GetMeth
 
-        samples = ["5637_urinaryTract"]
         meth = getRegionMeth("hg38",chrom,chromStart,chromEnd)
         methP = processMeth(meth,samples[0])
         linkFileMeth = saveFileMeth(inputID,meth,samples)
