@@ -95,7 +95,7 @@
                                                             <select placeholder="Sample" name="sample" id="sample" class="sample_select selectpicker" required multiple>
                                                                 <option value = "ALL">All</option>
                                                                 {% for sample in content.hg38.Adipose %}
-                                                                    <option value="{{sample.individual}}_{{ sample.sample }}">{{ sample.individual }}_{{ sample.sample }}</option>
+                                                                    <option value="{{sample.id}}">{{ sample.id }}</option>
                                                                 {% endfor %}
                                                             </select> 
                                                         </fieldset>

@@ -38,6 +38,7 @@ def processContent(content):
                 allS = samplesProcess[sampleT]
             except:
                 allS = []
+            sample["id"] = sample["_id"]
             allS.append(sample)
             samplesProcess[sampleT] = allS
         content[assembly] = samplesProcess        
