@@ -56,7 +56,7 @@ class region(TemplateView):
         if request.POST['sample'] == "ALL":
             samples = "ALL"
         else:
-            samples = request.POST['sample']
+            samples = [request.POST['sample']]
         inputID = request.POST['input_id']
         # method = request.POST['method']
         
