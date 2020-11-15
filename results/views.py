@@ -41,22 +41,29 @@ class region(TemplateView):
         chrom = request.POST['chrom'].split("_")[0]
         chromStart = int(request.POST['chromStart'])
         chromEnd = int(request.POST['chromEnd'])
+        query = chrom+":"+str(chromStart)+"-"+str(chromEnd)
         if request.POST['sample'] == "ALL":
             samples = "ALL"
         else:
-            samples = [request.POST['sample']]
+            samples = [request.POST['sample[]']]
+        print(samples)
         inputID = request.POST['input_id']
-        method = request.POST['method']
+        # method = request.POST['method']
         
         # Create jobDir
 
         rootID = settings.MEDIA_ROOT+"/"+inputID
-        os.mkdir(rootID)
+        # os.mkdir(rootID)
 
         #GetMeth
 
         meth = getRegionMeth("hg38",chrom,chromStart,chromEnd)
-        linkFileMeth = saveFileMeth(inputID,meth,samples,method)
+        # linkFileMeth = saveFileMeth(inputID,meth,samples)
+        linkFileMeth = ""
 
-        return render(request, self.template, { 'uniqueID':inputID, 'linkFileMeth':linkFileMeth
+        return render(request, self.template, {
+            'uniqueID':inputID,
+            'linkFileMeth':linkFileMeth,
+            'query':query,
+            'samples':samples
         })

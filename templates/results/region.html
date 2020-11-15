@@ -7,7 +7,21 @@
         <h3>NGSmethDB results for job ID: <a href="{% url 'region' %}?id={{ uniqueID }}">{{ uniqueID }}</a></h3>
     </div>
     <hr>
-
     <a href='{{ linkFileMeth }}' download><button class="btn btn-success btn-sm">Download methylation data</button></a>
+    <div class="card mt-3 mb-3">
+        <div class="card-header">
+            <h4>Your Query</h4>
+        </div>
+        <div class="card-body">
+            <p><b>Region:</b> {{ query }}</p>
+            <p>
+                <b>Samples:</b>
+                {% for sample in samples %}
+                    {{ sample }}
+                {% endfor %}
+            </p>
+
+        </div>
+    </div>
 </div>
 {% endblock %}

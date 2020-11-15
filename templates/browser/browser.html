@@ -20,8 +20,9 @@
                                 </div>
                                 <div class="card-body">
                                     <form id="formInput">
-                                        <input type="radio" checked="True" name="browser" onclick="myFunction(this.value)" value="region"> Region<br>
-                                        <input type="radio" name="browser" onclick="myFunction(this.value)" value="gene"> Gene<br>
+                                        <input type="radio" checked="True" name="browser" onclick="inputType(this.value)" value="region"> Region<br>
+                                        <!-- <input type="radio" name="browser" onclick="inputType(this.value)" value="gene"> Gene<br> -->
+                                        <input type="radio" name="browser" onclick="inputType(this.value)" value="cpgisland"> CpG island<br>
                                     </form>
                                 </div>
                             </div>
@@ -30,7 +31,7 @@
                             <div id="regionInput" style="display:block;">
                                 <div class="card">
                                     <div class="card-header d-flex justify-content-center">
-                                        <b>REGION</b>
+                                        <h3>REGION</h3>
                                     </div>   
                                     <p id="errorsFormRegion" class="text-danger text-center ml-2 mr-2 mt-2 font-weight-light"></p>
                                     <div class="card-body ">
@@ -38,7 +39,17 @@
                                             {% csrf_token %}
                                             <ul class="list-group list-group-flush">
                                                 <li class="list-group-item">
-                                                    <p class="d-flex justify-content-center">Select the coordinates of the region</p>
+                                                    <h5 class="d-flex justify-content-center">ASSEMBLY</h5>
+                                                    <div class="d-flex justify-content-center">
+                                                        <select onchange="changeAssembly();" class="selectpicker" id="assembly" required title="Choose one of the following...">
+                                                            {% for assembly in content %}
+                                                                <option>{{ assembly }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item" id="divRegion" style="display:None;">
+                                                    <h5 class="d-flex justify-content-center">REGION COORDINATES</h5>
                                                     <fieldset class="d-flex justify-content-center">
                                                         <select placeholder="chrom" name="chrom" id="chrom" class="chrom_select" onchange='changeChrom()' required>
                                                             <option value ="" selected disabled>chrom</option>
@@ -46,39 +57,50 @@
                                                                 <option value="{{ chrom.chrom }}_{{ chrom.size }}">{{ chrom.chrom }}</option>
                                                             {% endfor %}
                                                         </select> 
+                                                        :
                                                         <input id="chromStart" type="number" name="chromStart" class="chromStart_select" placeholder="chromStart" min="1" required>
                                                         -
                                                         <input id="chromEnd" type="number" name="chromEnd" class="chromStart_select" placeholder="chromEnd" min="1" required>
                                                     </fieldset>
                                                 </li>
-                                                <li class="list-group-item">
+                                                <!-- <li class="list-group-item" style="display:None;">
                                                     <p class="d-flex justify-content-center">Choose a sequencing method</p>
                                                     <fieldset class="d-flex justify-content-center">
                                                     <label>
-                                                        <input type="radio" name="method" value="wgbs" checked="True"> WGBS 
+                                                        <input type="radio" name="method" value="wgbs" checked="True"> WGBS
                                                     </label>
+                                                    &nbsp;
                                                     <label>
                                                         <input type="radio" name="method" value="rrbs"> RRBS 
                                                     </label>
+                                                    &nbsp;
                                                     <label>
                                                         <input type="radio" name="method" value="both"> Both 
                                                     </label>
                                                 </fieldset>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <p class="d-flex justify-content-center">
-                                                        Select a sample
-                                                    </p>
-                                                    <fieldset class="d-flex justify-content-center">
-                                                        <select placeholder="Sample" name="sample" id="sample" class="sample_select" required multiple>
-                                                            <option value = "" selected disabled>Sample</option>
-                                                            <option value = "ALL">All</option>
-                                                            {% for sample in samples %}
-                                                                <option value="{{ sample.sample }}">{{ sample.sample }}</option>
-                                                            {% endfor %}
-                                                        </select> 
-                                                    </fieldset>
-                                                </li>
+                                                </li> -->
+                                                <div id="divSample" style="display:None;">
+                                                    <li class="list-group-item">
+                                                        <p class="d-flex justify-content-center">
+                                                            <h5 class="d-flex justify-content-center">SAMPLE SELECTION</h5>
+                                                        </p>
+                                                        <fieldset class="d-flex justify-content-center">
+                                                            <select placeholder="Tissue" name="tissue" id="tissue" class="tissue_select selectpicker mr-3" required multiple>
+                                                                {% for sample in content.hg38 %}
+                                                                    <option value="{{ sample.sample }}">{{ sample }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                            <select placeholder="Sample"
+
+                                                            <select placeholder="Sample" name="sample" id="sample" class="sample_select selectpicker" required multiple>
+                                                                <option value = "ALL">All</option>
+                                                                {% for sample in content.hg38.Adipose %}
+                                                                    <option value="{{ sample.sample }}">{{ sample.individual }}_{{ sample.sample }}</option>
+                                                                {% endfor %}
+                                                            </select> 
+                                                        </fieldset>
+                                                    </li>
+                                                </div>      
                                                 <li class="list-group-item">
                                                     <div class="mt-2 d-flex justify-content-center">
                                                         <button type="submit" id='submitRegion' class="btn btn-success btn-sm mr-1">Submit</button>
@@ -94,9 +116,16 @@
                             </div>
                             <div id="geneInput" style="display:None;">
                                 <div class="card">
-                                    <div class="card-header">
-                                        <b>Gene</b>
+                                    <div class="card-header d-flex justify-content-center">
+                                        <h3>GENE</h3>
                                     </div>    
+                                </div>
+                            </div>
+                            <div id="cpgislandInput" style="display:None;">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-center">
+                                        <h3>CpG ISLAND</h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -111,19 +140,41 @@
 
 {% block js %}
 <script>
-    function myFunction(typeInput) {
+    function inputType(typeInput) {
         var divRegion = document.getElementById("regionInput");
         var divGene = document.getElementById("geneInput");  
+        var divIsland = document.getElementById("cpgislandInput")
         if (typeInput == "region"){
             divRegion.style.display = "block";
             divGene.style.display = "None";
+            divIsland.style.display = "None";
         }
         if (typeInput == "gene"){
             divRegion.style.display = "None";
             divGene.style.display = "block";
+            divIsland.style.display = "None";
+        }
+        if (typeInput == "cpgisland"){
+            divRegion.style.display = "None";
+            divGene.style.display = "None";
+            divIsland.style.display = "block";
         }
         // document.getElementById("region").html("test");
     }
+</script>
+
+<script>
+    $(document).ready(function(){
+        var assembly = document.getElementById("assembly").value;
+    });
+
+    function changeAssembly(e){
+        var assembly = document.getElementById("assembly").value;
+        var divRegion = document.getElementById("divRegion");
+        var divSample = document.getElementById("divSample");
+        divRegion.style.display = "block";
+        divSample.style.display = "block";
+}
 </script>
 
 <!-- Change chrom function -->
@@ -133,6 +184,7 @@
         var chrom = document.getElementById("chrom").value;
         var chromEnd = chrom.split("_")[1];
         document.getElementById("chromEnd").setAttribute("max",chromEnd)
+        document.getElementById("chromStart").setAttribute("max",chromEnd)
     }
 </script>
 

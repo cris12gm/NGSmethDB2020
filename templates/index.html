@@ -7,6 +7,28 @@
         <div class="col-12 d-flex justify-content-center">
             <img src="{% static 'images/titleBig.png'%}" width="60%">
         </div>
+        <div class="col align-self-center">
+            <div class="card bg-light mb-3">
+                <div class="card-body" id='cardInicio'>
+                    <font size="3">
+                        <p>
+                            <i>NGSmethDB20</i> is a database and web-server to explore data of DNA methylation from bisulfite sequencing experiments (WGBS and RRBS). It contains methylomes from 5 different species: <i>Homo sapiens (hg38)</i>, <i>Mus musculus (mm10)</i>, <i>Pan troglodytes (pantro4)</i>, <i>Macaca mulatta (rhemac3)</i>, <i>Arabidopsis thaliana (tair10)</i> and <i>Solanum lycopersicum (sl2.50)</i>.</p>
+                        </p>
+                    </font>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class = "row">
+        <div class= "col-12">
+            <div class="buttonIndex d-flex justify-content-center">
+                <center>
+                <a href="{% url 'browser' %}"><button class="btn btn-success btn-lg" ><i class="fas fa-fw fa-cogs"></i> BROWSE THE DATABASE </button></a>
+                </center>
+            </div>
+        </div>
+    </div>
     </div>
 </div>
 {% endblock %}
