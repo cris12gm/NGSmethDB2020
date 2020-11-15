@@ -23,11 +23,13 @@ def processMeth(meth,sample):
     for element in meth:
         chrom = element['_id'].split("_")[0]
         start = element['_id'].split("_")[1]
-        print (element)
-        methRatio = element['methylation_CG'][sample]["methRatio"]
-        pScore = element['methylation_CG'][sample]["pScore"]
-        result = {"chrom":chrom,"start":start,"methRatio":methRatio,"pScore":pScore}
-        methP.append(result)
+        try:
+            methRatio = element['methylation_CG'][sample]["methRatio"]
+            pScore = element['methylation_CG'][sample]["pScore"]
+            result = {"chrom":chrom,"start":start,"methRatio":methRatio,"pScore":pScore}
+            methP.append(result)
+        except:
+            pass
     return methP
 
 class region(TemplateView):
