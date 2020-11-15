@@ -20,7 +20,32 @@
                     {{ sample }}
                 {% endfor %}
             </p>
-
+        </div>
+    </div>
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="table-responsive" id="topResultPromoter-table">
+                <table class="table table-hover" id="dataTableMeth" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="titleTable"> <span class="table_tooltip" title="Chromosome">chrom</span></th>
+                                <th class="titleTable"> <span class="table_tooltip" title="Start">chromStart</span></th>
+                                <th class="titleTable"> <span class="table_tooltip" title="Methylation Ratio">Methylation Ratio</span></th>
+                                <th class="titleTable"> <span class="table_tooltip" title="Phred Score">Phred Score</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for field in meth %}
+                        <tr>
+                            <td class="rowTable">{{ field.chrom }}</td>
+                            <td class="rowTable">{{ field.start }}</td>
+                            <td class="rowTable">{{ field.methRatio }}</td>
+                            <td class="rowTable">{{ field.pScore }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

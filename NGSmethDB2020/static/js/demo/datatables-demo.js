@@ -4,4 +4,7 @@ $(document).ready(function() {
   $('#dataTableSamples').DataTable({
     "order":[[1, "desc"]]
   });
+  $('#dataTableMeth').DataTable({
+    "order":[[1, "desc"]]
+  });
 }); 

@@ -18,6 +18,17 @@ from utilities.manageID import checkID
 
 # Create your views here.
 
+def processMeth(meth,sample):
+    methP = []
+    for element in meth:
+        chrom = element['_id'].split("_")[0]
+        start = element['_id'].split("_")[1]
+        methRatio = element['methylation_CG'][sample]["methRatio"]
+        pScore = element['methylation_CG'][sample]["pScore"]
+        result = {"chrom":chrom,"start":start,"methRatio":methRatio,"pScore":pScore}
+        methP.append(result)
+    return methP
+
 class region(TemplateView):
     template = 'results/region.html'
     templateError = 'results/notFoundResults.html'
@@ -45,8 +56,7 @@ class region(TemplateView):
         if request.POST['sample'] == "ALL":
             samples = "ALL"
         else:
-            samples = [request.POST['sample[]']]
-        print(samples)
+            samples = request.POST['sample']
         inputID = request.POST['input_id']
         # method = request.POST['method']
         
@@ -58,6 +68,8 @@ class region(TemplateView):
         #GetMeth
 
         meth = getRegionMeth("hg38",chrom,chromStart,chromEnd)
+        samples = ["5637_urinaryTract"]
+        methP = processMeth(meth,samples[0])
         # linkFileMeth = saveFileMeth(inputID,meth,samples)
         linkFileMeth = ""
 
@@ -65,5 +77,6 @@ class region(TemplateView):
             'uniqueID':inputID,
             'linkFileMeth':linkFileMeth,
             'query':query,
-            'samples':samples
+            'samples':samples,
+            'meth':methP
         })

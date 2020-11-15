@@ -43,7 +43,7 @@
                                                     <div class="d-flex justify-content-center">
                                                         <select onchange="changeAssembly();" class="selectpicker" id="assembly" required title="Choose one of the following...">
                                                             {% for assembly in content %}
-                                                                <option>{{ assembly }}</option>
+                                                                <option value='{{ assembly }}'>{{ assembly }}</option>
                                                             {% endfor %}
                                                         </select>
                                                     </div>
@@ -95,7 +95,7 @@
                                                             <select placeholder="Sample" name="sample" id="sample" class="sample_select selectpicker" required multiple>
                                                                 <option value = "ALL">All</option>
                                                                 {% for sample in content.hg38.Adipose %}
-                                                                    <option value="{{ sample.sample }}">{{ sample.individual }}_{{ sample.sample }}</option>
+                                                                    <option value="{{sample.individual}}_{{ sample.sample }}">{{ sample.individual }}_{{ sample.sample }}</option>
                                                                 {% endfor %}
                                                             </select> 
                                                         </fieldset>
@@ -221,7 +221,9 @@ function checkformRegion()    {
             $('#chromStart').val("10840");
             $('#chromEnd').val("12000");
             document.getElementById('chrom').value="chr18_80373285.0";
-            document.getElementById('sample').value="5637_urinaryTract"
+            document.getElementById('sample').value="STL001_adipose";
+            document.getElementById('tissue').value='Adipose'
+            document.getElementById('assembly').value="hg38";
             return false;
         });
 
