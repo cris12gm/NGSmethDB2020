@@ -5,6 +5,7 @@ $(document).ready(function() {
     "order":[[1, "desc"]]
   });
   $('#dataTableMeth').DataTable({
-    "order":[[1, "desc"]]
+    "order":[[1, "desc"]],
+    "pages":5
   });
 }); 
