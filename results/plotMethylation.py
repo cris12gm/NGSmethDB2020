@@ -21,7 +21,7 @@ def plotRegion(meth):
       
     df = pd.DataFrame(data=valuesPlot)
 
-    fig = px.strip(df, 'CpG ID', 'methRatio', stripmode="overlay",width=250)
+    fig = px.strip(df, 'CpG ID', 'methRatio', stripmode="overlay")
 
     # fig.update_layout(height=500,legend_orientation="h",xaxis_tickfont_size=14)
     # fig.update_xaxes(title_text='')
